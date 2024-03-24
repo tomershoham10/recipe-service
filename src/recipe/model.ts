@@ -1,7 +1,6 @@
-import mongoose, { Schema, Document, Types } from "mongoose";
-import { IngredientDocument } from "../ingridients/model.js";
+import mongoose, { Schema } from "mongoose";
 
-enum Categories {
+enum RecipeCategories {
   "ITALIAN",
   "ASAIN",
   "INDIAN",
@@ -18,31 +17,16 @@ enum difficultyLevels {
   "Advanced",
 }
 
-interface QuantifiedIngredient {
-  ingredient: Types.ObjectId | IngredientDocument;
-  quantity: number;
-  unit: string;
-}
-
-export interface RecipeDocument extends Document {
-  name: string;
-  description: string;
-  img: string;
-  categories: Categories[];
-  difficultyLevel: difficultyLevels;
-  quantifiedIngredients: QuantifiedIngredient[];
-}
-
 const recipesSchema: Schema = new Schema(
   {
     name: { type: String, required: true, unique: true, minlength: 3 },
     description: { type: String, required: true, minlength: 5 },
     img: { type: String, required: true, minlength: 5 },
-    categories: {
-      type: [String],
-      enum: Object.values(Categories),
+    categories: [{
+      type: String,
+      enum: Object.values(RecipeCategories),
       required: true,
-    },
+    }],
     difficultyLevel: {
       type: String,
       enum: Object.values(difficultyLevels),
@@ -50,9 +34,10 @@ const recipesSchema: Schema = new Schema(
     },
     quantifiedIngredients: [
       {
-        ingredient: {
+        ingredientId: {
           type: Schema.Types.ObjectId,
-          ref: "Ingredient", // Reference the Ingredient model using ObjectId
+          ref: "Ingredient",
+          required: true,
         },
         quantity: { type: Number, required: true },
         unit: { type: String, required: true },
@@ -62,5 +47,5 @@ const recipesSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-const RecipeModel = mongoose.model<RecipeDocument>("Recipe", recipesSchema);
-export { RecipeModel, Categories, difficultyLevels, QuantifiedIngredient };
+const RecipeModel = mongoose.model<RecipeType>("Recipe", recipesSchema);
+export default RecipeModel;

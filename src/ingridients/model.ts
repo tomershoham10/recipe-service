@@ -1,6 +1,16 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-enum Categories {
+enum Shops {
+  "GROCERY",
+  "DELI",
+  "FARMERS_MARKET",
+  "SUPERMARKET",
+  "BUTCHER_SHOP",
+  "FISH_MARKET",
+  "HEALTH_STORE",
+}
+
+enum IngredientCategories {
   "CHICKEN",
   "MEAT",
   "VEGAN",
@@ -13,43 +23,26 @@ enum Categories {
   "SAUCES",
 }
 
-enum Shops {
-  "GROCERY",
-  "DELI",
-  "FARMERS_MARKET",
-  "SUPERMARKET",
-  "BUTCHER_SHOP",
-  "FISH_MARKET",
-  "HEALTH_STORE",
-}
-
-export interface IngredientDocument extends Document {
-  name: string;
-  averagedPrice: number;
-  category: Categories;
-  whereToFind: Shops[];
-}
-
 const ingridientSchema: Schema = new Schema(
   {
-    name: { type: String, required: true, unique: true, minlength: 3 },
+    name: { type: String, required: true, unique: true, minlength: 1 },
     averagedPrice: { type: Number, required: true, min: 0 },
-    category: {
+    category: [{
       type: String,
-      enum: Object.values(Categories),
+      enum: Object.values(IngredientCategories),
       required: false,
-    },
-    whereToFind: {
-      type: [String],
+    }],
+    whereToFind: [{
+      type: String,
       enum: Object.values(Shops),
       required: false,
-    },
+    }],
   },
-  { timestamps: true } // This will add 'createdAt' and 'updatedAt' fields automatically
+  { timestamps: true } // adds 'createdAt' and 'updatedAt' fields automatically
 );
 
-const IngredientModel = mongoose.model<IngredientDocument>(
+const IngredientModel = mongoose.model<IngredientType>(
   "Ingredient",
   ingridientSchema
 );
-export { IngredientModel, Categories, Shops };
+export default IngredientModel;

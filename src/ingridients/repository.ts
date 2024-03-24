@@ -1,56 +1,44 @@
-import mongoose, { Model } from "mongoose";
-import { IngredientDocument, Categories, Shops } from "./model.js";
-
-type IngredientType = {
-  name: string;
-  averagedPrice: number;
-  category: Categories;
-  whereToFind: Shops[];
-};
+import mongoose from "mongoose";
+import IngredientModel from "./model.js";
 
 export class IngredientRepository {
-  private readonly ingredientModel: Model<IngredientDocument>;
 
-  constructor(ingredientModel: Model<IngredientDocument>) {
-    this.ingredientModel = ingredientModel;
-  }
-
-  async createIngredient(
+  static async createIngredient(
     ingredient: IngredientType
-  ): Promise<IngredientDocument> {
+  ): Promise<IngredientType> {
     console.log(ingredient);
-    const newIngredient = await this.ingredientModel.create(ingredient);
+    const newIngredient = await IngredientModel.create(ingredient);
     return newIngredient;
   }
 
-  async getMany(): Promise<IngredientDocument[]> {
-    const ingredients = await this.ingredientModel.find({});
+  static async getMany(): Promise<IngredientType[]> {
+    const ingredients = await IngredientModel.find({});
     console.log(ingredients);
 
     return ingredients;
   }
 
-  async getIngredientById(
+  static async getIngredientById(
     ingredientId: mongoose.ObjectId | string
-  ): Promise<IngredientDocument | null> {
-    const ingredient = await this.ingredientModel.findById(ingredientId);
+  ): Promise<IngredientType | null> {
+    const ingredient = await IngredientModel.findById(ingredientId);
     return ingredient;
   }
 
-  async deleteIngredientById(
-    ingredientId: mongoose.ObjectId
-  ): Promise<IngredientDocument | null> {
-    const ingredient = await this.ingredientModel.findOneAndDelete(
-      ingredientId
+  static async deleteIngredientById(
+    ingredientId: string
+  ): Promise<IngredientType | null> {
+    const ingredient = await IngredientModel.findOneAndDelete(
+      { _id: ingredientId }
     );
     return ingredient;
   }
 
-  async updateIngredientById(
-    ingredientId: mongoose.ObjectId,
+  static async updateIngredientById(
+    ingredientId: string,
     filedsToUpdate: Partial<IngredientType>
-  ): Promise<IngredientDocument | null> {
-    const updatedIngredient = await this.ingredientModel.findByIdAndUpdate(
+  ): Promise<IngredientType | null> {
+    const updatedIngredient = await IngredientModel.findByIdAndUpdate(
       ingredientId,
       filedsToUpdate,
       { new: true }

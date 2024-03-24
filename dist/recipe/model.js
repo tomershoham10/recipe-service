@@ -1,42 +1,47 @@
 import mongoose, { Schema } from "mongoose";
-var Categories;
-(function (Categories) {
-    Categories[Categories["CHICKEN"] = 0] = "CHICKEN";
-    Categories[Categories["MEAT"] = 1] = "MEAT";
-    Categories[Categories["VEGAN"] = 2] = "VEGAN";
-    Categories[Categories["VEGATERIAN"] = 3] = "VEGATERIAN";
-    Categories[Categories["ITALIAN"] = 4] = "ITALIAN";
-    Categories[Categories["ASIAN"] = 5] = "ASIAN";
-    Categories[Categories["INDIAN"] = 6] = "INDIAN";
-})(Categories || (Categories = {}));
-var DifficultyLevel;
-(function (DifficultyLevel) {
-    DifficultyLevel[DifficultyLevel["EASY"] = 0] = "EASY";
-    DifficultyLevel[DifficultyLevel["MEDIUM"] = 1] = "MEDIUM";
-    DifficultyLevel[DifficultyLevel["ADVANCED"] = 2] = "ADVANCED";
-})(DifficultyLevel || (DifficultyLevel = {}));
-var TimeUnit;
-(function (TimeUnit) {
-    TimeUnit["Minutes"] = "minutes";
-    TimeUnit["Hours"] = "hours";
-    TimeUnit["Days"] = "days";
-})(TimeUnit || (TimeUnit = {}));
-const recipeSchema = new Schema({
+var RecipeCategories;
+(function (RecipeCategories) {
+    RecipeCategories[RecipeCategories["ITALIAN"] = 0] = "ITALIAN";
+    RecipeCategories[RecipeCategories["ASAIN"] = 1] = "ASAIN";
+    RecipeCategories[RecipeCategories["INDIAN"] = 2] = "INDIAN";
+    RecipeCategories[RecipeCategories["VEGAN"] = 3] = "VEGAN";
+    RecipeCategories[RecipeCategories["SEAFOOD"] = 4] = "SEAFOOD";
+    RecipeCategories[RecipeCategories["SALAD"] = 5] = "SALAD";
+    RecipeCategories[RecipeCategories["DINNER"] = 6] = "DINNER";
+    RecipeCategories[RecipeCategories["DESSERT"] = 7] = "DESSERT";
+})(RecipeCategories || (RecipeCategories = {}));
+var difficultyLevels;
+(function (difficultyLevels) {
+    difficultyLevels[difficultyLevels["Easy"] = 0] = "Easy";
+    difficultyLevels[difficultyLevels["Medium"] = 1] = "Medium";
+    difficultyLevels[difficultyLevels["Advanced"] = 2] = "Advanced";
+})(difficultyLevels || (difficultyLevels = {}));
+const recipesSchema = new Schema({
     name: { type: String, required: true, unique: true, minlength: 3 },
-    img: { type: String, required: true, minlength: 3 },
-    category: {
-        type: [String],
-        enum: Object.values(Categories),
+    description: { type: String, required: true, minlength: 5 },
+    img: { type: String, required: true, minlength: 5 },
+    categories: [{
+            type: String,
+            enum: Object.values(RecipeCategories),
+            required: true,
+        }],
+    difficultyLevel: {
+        type: String,
+        enum: Object.values(difficultyLevels),
         required: true,
     },
-    quantifiedIngredients: {
-        type: [{ type: Schema.Types.ObjectId, ref: "Ingridient" }],
-        required: true,
-    },
-    estimatedTime: {
-        value: { type: Number, required: true },
-        unit: { type: String, enum: Object.values(TimeUnit), required: true },
-    },
+    quantifiedIngredients: [
+        {
+            ingredientId: {
+                type: Schema.Types.ObjectId,
+                ref: "Ingredient",
+                required: true,
+            },
+            quantity: { type: Number, required: true },
+            unit: { type: String, required: true },
+        },
+    ],
 }, { timestamps: true });
-export default mongoose.model("Recipe", recipeSchema);
+const RecipeModel = mongoose.model("Recipe", recipesSchema);
+export default RecipeModel;
 //# sourceMappingURL=model.js.map

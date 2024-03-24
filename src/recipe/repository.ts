@@ -1,64 +1,84 @@
-import mongoose, { Model } from "mongoose";
-import {
-  RecipeDocument,
-  Categories,
-  difficultyLevels,
-  QuantifiedIngredient,
-} from "./model.js";
+import mongoose, { UpdateWriteOpResult } from "mongoose";
+import RecipeModel from "./model.js";
 
-interface recipeType {
-  name: string;
-  description: string;
-  img: string;
-  categories: Categories[];
-  difficultyLevel: difficultyLevels;
-  quantifiedIngredients: QuantifiedIngredient[];
-}
-
-export class RecipeRepository {
-  private readonly recipeModel: Model<RecipeDocument>;
-
-  constructor(recipeModel: Model<RecipeDocument>) {
-    this.recipeModel = recipeModel;
+export default class RecipeRepository {
+  static async createRecipe(recipe: RecipeType): Promise<RecipeType> {
+    try {
+      const newRecipe = await RecipeModel.create(recipe);
+      return newRecipe;
+    } catch (error: any) {
+      console.error('Repository Error:', error.message);
+      throw new Error(`recipe repo - createRecipe: ${error}`);
+    }
   }
 
-  async createRecipe(recipe: recipeType): Promise<RecipeDocument> {
-    const newRecipe = await this.recipeModel.create(recipe);
-    return newRecipe;
+  static async getMany(): Promise<RecipeType[]> {
+    try {
+      const recipes = await RecipeModel.find({});
+      return recipes;
+    } catch (error: any) {
+      console.error('Repository Error:', error.message);
+      throw new Error(`recipe repo - getMany: ${error}`);
+    }
   }
 
-  async getMany(): Promise<RecipeDocument[]> {
-    const recipes = await this.recipeModel.find({});
-    return recipes;
+
+  static async getRecipeById(recipeId: string): Promise<RecipeType | null> {
+    try {
+      const recipe = await RecipeModel.findById(recipeId);
+      return recipe;
+    }
+    catch (error: any) {
+      console.error('Repository Error:', error.message);
+      throw new Error(`recipe repo - getRecipeById: ${error}`);
+    }
   }
 
-  async getRecipeById(
-    recipeId: mongoose.ObjectId | string
-  ): Promise<RecipeDocument | null> {
-    const recipe = await this.recipeModel.findById(recipeId);
-    return recipe;
+  static async deleteRecipeById(recipeId: string): Promise<RecipeType | null> {
+    try {
+      const recipe = await RecipeModel.findOneAndDelete({ _id: recipeId });
+      return recipe;
+    }
+    catch (error: any) {
+      console.error('Repository Error:', error.message);
+      throw new Error(`recipe repo - deleteRecipeById: ${error}`);
+    }
   }
 
-  async deleteRecipeById(
-    recipeId: mongoose.ObjectId
-  ): Promise<RecipeDocument | null> {
-    const recipe = await this.recipeModel.findOneAndDelete(recipeId);
-    return recipe;
+  static async updateRecipeById(
+    recipeId: string,
+    filedsToUpdate: Partial<RecipeType>
+  ): Promise<RecipeType | null> {
+    try {
+      const updatedRecipe = await RecipeModel.findByIdAndUpdate(
+        recipeId,
+        filedsToUpdate,
+        { new: true }
+      );
+      return updatedRecipe;
+    }
+    catch (error: any) {
+      console.error('Repository Error:', error.message);
+      throw new Error(`recipe repo - updateRecipeById: ${error}`);
+    }
   }
 
-  async updateRecipeById(
-    recipeId: mongoose.ObjectId,
-    filedsToUpdate: Partial<RecipeDocument>
-  ): Promise<RecipeDocument | null> {
-    const updatedRecipe = await this.recipeModel.findByIdAndUpdate(
-      recipeId,
-      filedsToUpdate,
-      { new: true }
-    );
-    return updatedRecipe;
-  }
+  // TODO: Use this function
+  static async removeIngredients(
+    ingredients: IngredientType[],
+    query: mongoose.FilterQuery<RecipeType> = {}
+  ): Promise<UpdateWriteOpResult> {
+    try {
+      const updatedRecipes = await RecipeModel.updateMany(query, {
+        $pullAll: {
+          ingredients: { $in: ingredients },
+        },
+      });
 
-  async removeIngredients(ingredients, query = {}): Promise<> {
-    const updatedRecipe = await this.recipeModel.updateMany()
+      return updatedRecipes;
+    } catch (err) {
+      console.error(err);
+      throw new Error("Failed to update recipes.");
+    }
   }
 }

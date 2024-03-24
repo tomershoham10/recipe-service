@@ -3,9 +3,10 @@ import { IngredientController } from "./controller.js";
 
 const ingredientRouter = express.Router();
 
-ingredientRouter.get("/", IngredientController.getMany);
+ingredientRouter
+    .get("/:id", IngredientController.getById)
+    .get("/", IngredientController.getMany);
 
-ingredientRouter.get("/:id", IngredientController.getById);
 
 ingredientRouter.post("/", IngredientController.create);
 

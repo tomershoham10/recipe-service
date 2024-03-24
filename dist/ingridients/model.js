@@ -1,17 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-var Categories;
-(function (Categories) {
-    Categories[Categories["CHICKEN"] = 0] = "CHICKEN";
-    Categories[Categories["MEAT"] = 1] = "MEAT";
-    Categories[Categories["VEGAN"] = 2] = "VEGAN";
-    Categories[Categories["VEGETABLE"] = 3] = "VEGETABLE";
-    Categories[Categories["DAIRY"] = 4] = "DAIRY";
-    Categories[Categories["SEAFOOD"] = 5] = "SEAFOOD";
-    Categories[Categories["FRUIT"] = 6] = "FRUIT";
-    Categories[Categories["GRAINS"] = 7] = "GRAINS";
-    Categories[Categories["SPICES"] = 8] = "SPICES";
-    Categories[Categories["SAUCES"] = 9] = "SAUCES";
-})(Categories || (Categories = {}));
 var Shops;
 (function (Shops) {
     Shops[Shops["GROCERY"] = 0] = "GROCERY";
@@ -22,21 +9,34 @@ var Shops;
     Shops[Shops["FISH_MARKET"] = 5] = "FISH_MARKET";
     Shops[Shops["HEALTH_STORE"] = 6] = "HEALTH_STORE";
 })(Shops || (Shops = {}));
+var IngredientCategories;
+(function (IngredientCategories) {
+    IngredientCategories[IngredientCategories["CHICKEN"] = 0] = "CHICKEN";
+    IngredientCategories[IngredientCategories["MEAT"] = 1] = "MEAT";
+    IngredientCategories[IngredientCategories["VEGAN"] = 2] = "VEGAN";
+    IngredientCategories[IngredientCategories["VEGETABLE"] = 3] = "VEGETABLE";
+    IngredientCategories[IngredientCategories["DAIRY"] = 4] = "DAIRY";
+    IngredientCategories[IngredientCategories["SEAFOOD"] = 5] = "SEAFOOD";
+    IngredientCategories[IngredientCategories["FRUIT"] = 6] = "FRUIT";
+    IngredientCategories[IngredientCategories["GRAINS"] = 7] = "GRAINS";
+    IngredientCategories[IngredientCategories["SPICES"] = 8] = "SPICES";
+    IngredientCategories[IngredientCategories["SAUCES"] = 9] = "SAUCES";
+})(IngredientCategories || (IngredientCategories = {}));
 const ingridientSchema = new Schema({
-    name: { type: String, required: true, unique: true, minlength: 3 },
+    name: { type: String, required: true, unique: true, minlength: 1 },
     averagedPrice: { type: Number, required: true, min: 0 },
-    category: {
-        type: String,
-        enum: Object.values(Categories),
-        required: false,
-    },
-    whereToFind: {
-        type: [String],
-        enum: Object.values(Shops),
-        required: false,
-    },
-}, { timestamps: true } // This will add 'createdAt' and 'updatedAt' fields automatically
+    category: [{
+            type: String,
+            enum: Object.values(IngredientCategories),
+            required: false,
+        }],
+    whereToFind: [{
+            type: String,
+            enum: Object.values(Shops),
+            required: false,
+        }],
+}, { timestamps: true } // adds 'createdAt' and 'updatedAt' fields automatically
 );
 const IngredientModel = mongoose.model("Ingredient", ingridientSchema);
-export { IngredientModel, Categories, Shops };
+export default IngredientModel;
 //# sourceMappingURL=model.js.map

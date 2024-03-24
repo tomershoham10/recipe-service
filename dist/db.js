@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const dbUrl = "mongodb://localhost:27017/CookBook_2";
+const dbUrl = "mongodb://127.0.0.1:27017/CookBook_2";
 const connectDB = async () => {
     try {
         await mongoose.connect(dbUrl);
