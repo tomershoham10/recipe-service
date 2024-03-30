@@ -27,7 +27,7 @@ const ingridientSchema: Schema = new Schema(
   {
     name: { type: String, required: true, unique: true, minlength: 1 },
     averagedPrice: { type: Number, required: true, min: 0 },
-    category: [{
+    categories: [{
       type: String,
       enum: Object.values(IngredientCategories),
       required: false,

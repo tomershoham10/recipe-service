@@ -57,33 +57,33 @@ interface StepType {
 //////////// INGREDIENT ///////////////
 
 enum IngredientCategories {
-    "CHICKEN",
-    "MEAT",
-    "VEGAN",
-    "VEGETABLE",
-    "DAIRY",
-    "SEAFOOD",
-    "FRUIT",
-    "GRAINS",
-    "SPICES",
-    "SAUCES",
+    CHICKEN = "chicken",
+    MEAT = "meat",
+    VEGAN = "vegan",
+    VEGETABLE = "vegetable",
+    DAIRY = "dairy",
+    SEAFOOD = "seafood",
+    FRUIT = "fruit",
+    GRAINS = "grains",
+    SPICES = "spices",
+    SAUCES = "sauces",
 }
 
 enum Shops {
-    "GROCERY",
-    "DELI",
-    "FARMERS_MARKET",
-    "SUPERMARKET",
-    "BUTCHER_SHOP",
-    "FISH_MARKET",
-    "HEALTH_STORE",
+    GROCERY = "grocery",
+    DELI = "deli",
+    FARMERS_MARKET = "farmersMarket",
+    SUPERMARKET = "supermarket",
+    BUTCHER_SHOP = "butcherShop",
+    FISH_MARKET = "fishMarket",
+    HEALTH_STORE = "healthStore",
 }
 
 interface IngredientType {
     _id: string;
     name: string;
     averagedPrice: number;
-    category: IngredientCategories[];
+    categories: IngredientCategories[];
     whereToFind: Shops[];
 };
 
