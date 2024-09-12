@@ -5,25 +5,33 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "tsc",
     "build:w": "tsc -w",
     "start": "nodemon ./dist/index.js",
-    "dev": "concurrently  \"npm:build:w\" \"npm:start\""
+    "dev": "concurrently  \"npm:build:w\" \"npm:start\"",
+    "lint": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.17",
     "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
     "concurrently": "^8.2.2",
     "ts-node": "^10.9.1",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.3",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3",
+    "@types/nodemon": "^1.19.6"
   },
   "dependencies": {
     "@types/body-parser": "^1.19.2",
-    "@types/cors": "^2.8.17",
     "@types/express-serve-static-core": "^4.17.43",
-    "@types/nodemon": "^1.19.6",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
