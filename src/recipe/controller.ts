@@ -6,7 +6,7 @@ export class RecipeController {
     try {
       const body = req.body;
       const newRecipe = await RecipeManager.createRecipe(body);
-      if (!!newRecipe) {
+      if (newRecipe) {
         return res.status(201).json({ message: "Recipe created successfully", newRecipe });
       } else {
         throw new Error('Recipe controller create Recipe error.');
@@ -21,7 +21,7 @@ export class RecipeController {
     try {
       const recipes = await RecipeManager.getMany();
 
-      if (!!!recipes) {
+      if (!recipes) {
         return res.status(404).json({ message: "recipes not found" });
       }
       res.status(200).json({ recipes });
@@ -35,7 +35,7 @@ export class RecipeController {
     try {
       const id = req.query.id as string;
       const recipe = await RecipeManager.getRecipeById(id);
-      if (!!!recipe) {
+      if (!recipe) {
         return res.status(404).json({ message: "recipe not found" });
       }
       res.status(200).json({ recipe });
@@ -49,7 +49,7 @@ export class RecipeController {
     try {
       const id = req.params.id;
       const status = await RecipeManager.deleteRecipeById(id);
-      if (!!!status) {
+      if (!status) {
         return res.status(404).json({ message: "recipe not found" });
       }
       res.status(200).json({ status });
@@ -64,7 +64,7 @@ export class RecipeController {
       const id = req.params.id;
       const body = req.body;
       const updatedRecipe = await RecipeManager.updateRecipeById(id, body);
-      if (!!!updatedRecipe) {
+      if (!updatedRecipe) {
         return res.status(404).json({ message: "recipe not found" });
       }
 

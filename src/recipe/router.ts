@@ -1,5 +1,4 @@
-import express, { NextFunction } from "express";
-import Express from "express";
+import express from "express";
 import { RecipeController } from "./controller.js";
 
 const recipeRouter = express.Router();

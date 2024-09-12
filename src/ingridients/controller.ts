@@ -6,7 +6,7 @@ export class IngredientController {
     try {
       const body = req.body;
       const newIngredient = await IngredientManager.createIngredient(body);
-      if (!!newIngredient) {
+      if (newIngredient) {
         return res.status(201).json({ message: "Ingredient created successfully", newIngredient });
       } else {
         throw new Error('Ingredient controller create Ingredient error.');
@@ -20,7 +20,7 @@ export class IngredientController {
   static async getMany(_req: Express.Request, res: Express.Response) {
     try {
       const ingredients: IngredientType[] = await IngredientManager.getMany();
-      if (!!!ingredients) {
+      if (!ingredients) {
         return res.status(404).json({ message: "ingredients not found" });
       }
       res.status(200).json({ ingredients });
@@ -34,7 +34,7 @@ export class IngredientController {
     try {
       const id: string = req.params.id;
       const ingredient = await IngredientManager.getIngredientById(id);
-      if (!!!ingredient) {
+      if (!ingredient) {
         return res.status(404).json({ message: "ingredient not found" });
       }
       res.status(200).json({ ingredient });
@@ -48,7 +48,7 @@ export class IngredientController {
     try {
       const id = req.params.id as string;
       const status = await IngredientManager.deleteIngredientById(id);
-      if (!!!status) {
+      if (!status) {
         return res.status(404).json({ message: "ingredient not found" });
       }
       res.status(200).json({ status });
@@ -64,7 +64,7 @@ export class IngredientController {
       const body: Partial<IngredientType> = req.body;
       //   console.log(id, req.body);
       const updatedIngredient = await IngredientManager.updateIngredientById(id, body);
-      if (!!!updatedIngredient) {
+      if (!updatedIngredient) {
         return res.status(404).json({ message: "ingredient not found" });
       }
 

@@ -6,7 +6,7 @@ export default class StepController {
     try {
       const body = req.body;
       const newStep = await StepManager.createStep(body);
-      if (!!newStep) {
+      if (newStep) {
         return res.status(201).json({ message: "step created successfully", newStep });
       } else {
         throw new Error('steps controller create step error.');
@@ -20,7 +20,7 @@ export default class StepController {
     try {
       const body = req.body;
       const newSteps = await StepManager.createSteps(body);
-      if (!!newSteps) {
+      if (newSteps) {
         return res.status(201).json({ message: "steps created successfully", newSteps });
       } else {
         throw new Error('steps controller create steps error.');
@@ -34,7 +34,7 @@ export default class StepController {
     try {
       const recipeId = req.query.id as string;
       const steps = await StepManager.getStepsByRecipeId(recipeId);
-      if (!!!steps) {
+      if (!steps) {
         return res.status(404).json({ message: "steps not found" });
       }
       res.status(200).json({ steps });
@@ -49,7 +49,7 @@ export default class StepController {
     try {
       const id = req.params.id as string;
       const status = await StepManager.deleteStepById(id);
-      if (!!!status) {
+      if (!status) {
         return res.status(404).json({ message: "step not found" });
       }
       res.status(200).json({ status });
@@ -63,7 +63,7 @@ export default class StepController {
       const id = req.params.id as string;
       const body = req.body as Partial<StepType>;
       const updatedStep = await StepManager.updateStepById(id, body);
-      if (!!!updatedStep) {
+      if (!updatedStep) {
         return res.status(404).json({ message: "step not found" });
       }
 

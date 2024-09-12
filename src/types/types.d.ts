@@ -46,7 +46,7 @@ interface RecipeType {
     name: string;
     description: string;
     img: string;
-    categories: Categories[];
+    categories: RecipeCategories[];
     difficultyLevel: difficultyLevels;
     ingredients: RecipeIngredients[];
 }
