@@ -32,15 +32,20 @@ const recipesSchema: Schema = new Schema(
       enum: Object.values(difficultyLevels),
       required: true,
     },
-    quantifiedIngredients: [
+    ingredients: [
       {
-        ingredientId: {
-          type: Schema.Types.ObjectId,
-          ref: "Ingredient",
-          required: true,
-        },
-        quantity: { type: Number, required: true },
-        unit: { type: String, required: true },
+        header: { type: String, required: true },
+        quantifiedIngredients: [
+          {
+            ingredientId: {
+              type: Schema.Types.ObjectId,
+              ref: "Ingredient",
+              required: true,
+            },
+            quantity: { type: Number, required: true },
+            unit: { type: String, required: true },
+          },
+        ],
       },
     ],
   },

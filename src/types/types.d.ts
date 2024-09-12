@@ -35,6 +35,12 @@ interface QuantifiedIngredient {
     unit: Units;
 }
 
+interface RecipeIngredients {
+    header: string;
+    quantifiedIngredients: QuantifiedIngredient[];
+}
+
+
 interface RecipeType {
     _id: string;
     name: string;
@@ -42,7 +48,7 @@ interface RecipeType {
     img: string;
     categories: Categories[];
     difficultyLevel: difficultyLevels;
-    quantifiedIngredients: QuantifiedIngredient[];
+    ingredients: RecipeIngredients[];
 }
 
 /////////////// STEPS //////////////////
