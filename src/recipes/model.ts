@@ -1,23 +1,23 @@
 import mongoose, { Schema } from "mongoose";
 
 enum RecipeCategories {
-  "ITALIAN",
-  "ASAIN",
-  "INDIAN",
-  "VEGAN",
-  "SEAFOOD",
-  "SALAD",
-  "DINNER",
-  "DESSERT",
+  ITALIAN = "italian",
+  ASAIN = "asain",
+  INDIAN = "indian",
+  VEGAN = "vegan",
+  SEAFOOD = "seafood",
+  SALAD = "salad",
+  DINNER = "dinner",
+  DESSERT = "desset",
 }
 
 enum difficultyLevels {
-  "Easy",
-  "Medium",
-  "Advanced",
+  EASY = "easy",
+  MEDIUM = "medium",
+  ADVANCED = "advanced",
 }
 
-const recipesSchema: Schema = new Schema(
+const recipesSchema: Schema = new Schema<RecipeType>(
   {
     name: { type: String, required: true, unique: true, minlength: 3 },
     description: { type: String, required: true, minlength: 5 },
@@ -32,7 +32,7 @@ const recipesSchema: Schema = new Schema(
       enum: Object.values(difficultyLevels),
       required: true,
     },
-    ingredients: [
+    ingredientsSections: [
       {
         header: { type: String, required: true },
         quantifiedIngredients: [
@@ -44,8 +44,10 @@ const recipesSchema: Schema = new Schema(
             },
             quantity: { type: Number, required: true },
             unit: { type: String, required: true },
+            index: { type: Number, required: true }
           },
         ],
+        index: { type: Number, required: true }
       },
     ],
   },
