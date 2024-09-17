@@ -1,44 +1,29 @@
 import mongoose, { Schema } from "mongoose";
 
-enum Shops {
-  "GROCERY",
-  "DELI",
-  "FARMERS_MARKET",
-  "SUPERMARKET",
-  "BUTCHER_SHOP",
-  "FISH_MARKET",
-  "HEALTH_STORE",
-}
-
 enum IngredientCategories {
-  "CHICKEN",
-  "MEAT",
-  "VEGAN",
-  "VEGETABLE",
-  "DAIRY",
-  "SEAFOOD",
-  "FRUIT",
-  "GRAINS",
-  "SPICES",
-  "SAUCES",
+  CHICKEN = "chicken",
+  MEAT = "meat",
+  VEGAN = "vegan",
+  VEGETABLE = "vegetable",
+  DAIRY = "dairy",
+  SEAFOOD = "seafood",
+  FRUIT = "fruit",
+  GRAINS = "grains",
+  SPICES = "spices",
+  SAUCES = "sauces",
 }
 
-const ingridientSchema: Schema = new Schema(
+const ingridientSchema: Schema = new Schema<IngredientType>(
   {
     name: { type: String, required: true, unique: true, minlength: 1 },
-    averagedPrice: { type: Number, required: true, min: 0 },
+    pluralName: { type: String, required: false, unique: true, minlength: 1 },
     categories: [{
       type: String,
       enum: Object.values(IngredientCategories),
       required: false,
     }],
-    whereToFind: [{
-      type: String,
-      enum: Object.values(Shops),
-      required: false,
-    }],
   },
-  { timestamps: true } // adds 'createdAt' and 'updatedAt' fields automatically
+  { timestamps: true }
 );
 
 const IngredientModel = mongoose.model<IngredientType>(
