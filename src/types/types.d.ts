@@ -1,45 +1,46 @@
 /////////////// RECIPES //////////////////
 
 enum RecipeCategories {
-    "ITALIAN",
-    "ASAIN",
-    "INDIAN",
-    "VEGAN",
-    "SEAFOOD",
-    "SALAD",
-    "DINNER",
-    "DESSERT",
+    ITALIAN = "italian",
+    ASAIN = "asain",
+    INDIAN = "indian",
+    VEGAN = "vegan",
+    SEAFOOD = "seafood",
+    SALAD = "salad",
+    DINNER = "dinner",
+    DESSERT = "desset",
 }
 
 enum difficultyLevels {
-    "Easy",
-    "Medium",
-    "Advanced",
+    EASY = "easy",
+    MEDIUM = "medium",
+    ADVANCED = "advanced",
 }
 
 enum Units {
-    "units",
-    "grams",
-    "kgs",
-    "ML",
-    "liters",
-    "tbls",
-    "spoons",
-    "cups",
-    "pinch",
+    UNITS = "units",
+    GRAMS = "grams",
+    KGS = "kgs",
+    ML = "ml",
+    LITERS = "liters",
+    TBLS = "tbls",
+    SPOONS = "spoons",
+    CUPS = "cups",
+    PINCH = "pinch",
 }
 
 interface QuantifiedIngredient {
     ingredientId: string;
     quantity: number;
     unit: Units;
+    index: number;
 }
 
-interface RecipeIngredients {
+interface ingredientsSection {
     header: string;
     quantifiedIngredients: QuantifiedIngredient[];
+    index: number;
 }
-
 
 interface RecipeType {
     _id: string;
@@ -48,7 +49,8 @@ interface RecipeType {
     img: string;
     categories: RecipeCategories[];
     difficultyLevel: difficultyLevels;
-    ingredients: RecipeIngredients[];
+    ingredientsSections: ingredientsSection[];
+    steps: string[];
 }
 
 /////////////// STEPS //////////////////
@@ -63,33 +65,24 @@ interface StepType {
 //////////// INGREDIENT ///////////////
 
 enum IngredientCategories {
-    CHICKEN = "chicken",
-    MEAT = "meat",
-    VEGAN = "vegan",
-    VEGETABLE = "vegetable",
-    DAIRY = "dairy",
-    SEAFOOD = "seafood",
-    FRUIT = "fruit",
-    GRAINS = "grains",
-    SPICES = "spices",
-    SAUCES = "sauces",
-}
-
-enum Shops {
-    GROCERY = "grocery",
-    DELI = "deli",
-    FARMERS_MARKET = "farmersMarket",
-    SUPERMARKET = "supermarket",
-    BUTCHER_SHOP = "butcherShop",
-    FISH_MARKET = "fishMarket",
-    HEALTH_STORE = "healthStore",
+    CHICKEN = 'chicken',
+    MEAT = 'meat',
+    VEGAN = 'vegan',
+    VEGETERIAN = 'vegeterian',
+    VEGETABLES = 'vegetables',
+    FRUITS = 'fruits',
+    DAIRY = 'dairy',
+    SEAFOOD = 'seafood',
+    GRAINS = 'grains',
+    SPICES = 'spices',
+    SAUCES = 'sauces',
+    ALCOHOL = 'alcohol',
 }
 
 interface IngredientType {
     _id: string;
     name: string;
-    averagedPrice: number;
+    pluralName?: string;
     categories: IngredientCategories[];
-    whereToFind: Shops[];
 };
 
