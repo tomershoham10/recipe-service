@@ -1,32 +1,36 @@
 /////////////// RECIPES //////////////////
 
 enum RecipeCategories {
-    ITALIAN = "italian",
-    ASAIN = "asain",
-    INDIAN = "indian",
-    VEGAN = "vegan",
-    SEAFOOD = "seafood",
-    SALAD = "salad",
-    DINNER = "dinner",
-    DESSERT = "desset",
+    ITALIAN = "איטלקי",
+    ASAIN = "אסייתי",
+    INDIAN = "הודי",
+    VEGAN = "טבעוני",
+    VEGETERIAN = "צמחוני",
+    SEAFOOD = "דגים",
+    SALAD = "סלט",
+    DINNER = "ארוחת ערב",
+    DESSERT = "קינוח",
+    COCKTAIL = "קוקטייל",
+    SOUP = "מרק",
+    BAKING = "אפייה",
 }
 
-enum difficultyLevels {
-    EASY = "easy",
-    MEDIUM = "medium",
-    ADVANCED = "advanced",
+enum DifficultyLevels {
+    EASY = "קל",
+    MEDIUM = "בינוני",
+    ADVANCED = "למתקדמים",
 }
 
 enum Units {
-    UNITS = "units",
-    GRAMS = "grams",
-    KGS = "kgs",
-    ML = "ml",
-    LITERS = "liters",
-    TBLS = "tbls",
-    SPOONS = "spoons",
-    CUPS = "cups",
-    PINCH = "pinch",
+    UNITS = "יח'",
+    GRAMS = "גרם",
+    KGS = "ק\"ג",
+    ML = "מ\"ל",
+    LITERS = "ליטר",
+    TBLS = "כפות",
+    SPOONS = "כפיות",
+    CUPS = "כוסות",
+    PINCH = "קמצוץ",
 }
 
 interface QuantifiedIngredient {
@@ -36,30 +40,32 @@ interface QuantifiedIngredient {
     index: number;
 }
 
-interface ingredientsSection {
+interface IngredientsSection {
     header: string;
     quantifiedIngredients: QuantifiedIngredient[];
     index: number;
+}
+
+interface StepsType {
+    info: string;
+    index: number
+}
+
+interface StepsSection {
+    header: string;
+    index: number;
+    steps: StepsType[];
 }
 
 interface RecipeType {
     _id: string;
     name: string;
     description: string;
-    img: string;
+    picture: string;
     categories: RecipeCategories[];
-    difficultyLevel: difficultyLevels;
-    ingredientsSections: ingredientsSection[];
-    steps: string[];
-}
-
-/////////////// STEPS //////////////////
-
-interface StepType {
-    _id: string;
-    duration: number;
-    data: string;
-    img: string;
+    difficultyLevel: DifficultyLevels;
+    ingredientsSections: IngredientsSection[];
+    stepsSections: StepsSection[];
 }
 
 //////////// INGREDIENT ///////////////
@@ -85,4 +91,3 @@ interface IngredientType {
     pluralName?: string;
     categories: IngredientCategories[];
 };
-
