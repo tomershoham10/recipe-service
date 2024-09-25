@@ -1,16 +1,18 @@
 import mongoose, { Schema } from "mongoose";
 
 enum IngredientCategories {
-  CHICKEN = "chicken",
-  MEAT = "meat",
-  VEGAN = "vegan",
-  VEGETABLE = "vegetable",
-  DAIRY = "dairy",
-  SEAFOOD = "seafood",
-  FRUIT = "fruit",
-  GRAINS = "grains",
-  SPICES = "spices",
-  SAUCES = "sauces",
+  CHICKEN = 'chicken',
+  MEAT = 'meat',
+  VEGAN = 'vegan',
+  VEGETERIAN = 'vegeterian',
+  VEGETABLES = 'vegetables',
+  FRUITS = 'fruits',
+  DAIRY = 'dairy',
+  SEAFOOD = 'seafood',
+  GRAINS = 'grains',
+  SPICES = 'spices',
+  SAUCES = 'sauces',
+  ALCOHOL = 'alcohol',
 }
 
 const ingridientSchema: Schema = new Schema<IngredientType>(
@@ -25,6 +27,8 @@ const ingridientSchema: Schema = new Schema<IngredientType>(
   },
   { timestamps: true }
 );
+
+ingridientSchema.index({ pluralName: 1 }, { unique: true, partialFilterExpression: { pluralName: { $exists: true, $ne: null } } });
 
 const IngredientModel = mongoose.model<IngredientType>(
   "Ingredient",
