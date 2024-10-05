@@ -15,10 +15,10 @@ enum IngredientCategories {
   ALCOHOL = 'alcohol',
 }
 
-const ingridientSchema: Schema = new Schema<IngredientType>(
+const ingredientSchema: Schema = new Schema<IngredientType>(
   {
     name: { type: String, required: true, unique: true, minlength: 1 },
-    pluralName: { type: String, required: false, unique: true, minlength: 1 },
+    pluralName: { type: String, required: false, minlength: 1 },
     categories: [{
       type: String,
       enum: Object.values(IngredientCategories),
@@ -28,10 +28,13 @@ const ingridientSchema: Schema = new Schema<IngredientType>(
   { timestamps: true }
 );
 
-ingridientSchema.index({ pluralName: 1 }, { unique: true, partialFilterExpression: { pluralName: { $exists: true, $ne: null } } });
+ingredientSchema.index(
+  { pluralName: 1 },
+  { unique: true, partialFilterExpression: { pluralName: { $exists: true } } }
+);
 
 const IngredientModel = mongoose.model<IngredientType>(
   "Ingredient",
-  ingridientSchema
+  ingredientSchema
 );
 export default IngredientModel;
