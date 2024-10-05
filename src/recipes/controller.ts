@@ -31,10 +31,35 @@ export class RecipeController {
     }
   }
 
+  static async getPaginatedRecipes(req: Express.Request, res: Express.Response) {
+    try {
+      const { page = 1, limit = 10 } = req.query;
+      const pageNum = Number(page);
+      const limitNum = Number(limit);
+
+      // Call the manager to handle the business logic
+      const { recipes, hasMore, totalRecipes } = await RecipeManager.getPaginatedRecipes(pageNum, limitNum);
+
+      // Send the response
+      res.status(200).json({
+        recipes,
+        hasMore,
+        totalRecipes,
+        currentPage: pageNum,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ err: "Internal Server Error" });
+    }
+  }
+
   static async getById(req: Express.Request, res: Express.Response) {
     try {
-      const id = req.query.id as string;
+      const id = req.params.id;
+      console.log('recipe controller - getById: id - ', id);
+
       const recipe = await RecipeManager.getRecipeById(id);
+      console.log('recipe controller - getById: recipe - ', recipe);
       if (!recipe) {
         return res.status(404).json({ message: "recipe not found" });
       }

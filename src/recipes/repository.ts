@@ -17,11 +17,26 @@ export default class RecipeRepository {
       const recipes = await RecipeModel.find({});
       return recipes;
     } catch (error: any) {
-      console.error('Repository Error:', error.message);
+      console.error('Repository Error getMany:', error.message);
       throw new Error(`recipe repo - getMany: ${error}`);
     }
   }
 
+  static async getPaginatedRecipes(page: number, limit: number): Promise<{ recipes: RecipeType[], totalRecipes: number }> {
+    try {
+      const recipes = await RecipeModel.find()
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .sort({ createdAt: -1 });
+
+      const totalRecipes = await RecipeModel.countDocuments();
+      return { recipes, totalRecipes };
+    }
+    catch (error: any) {
+      console.error('Repository Error getPaginatedRecipes:', error.message);
+      throw new Error(`recipe repo - getPaginatedRecipes: ${error}`);
+    }
+  }
 
   static async getRecipeById(recipeId: string): Promise<RecipeType | null> {
     try {

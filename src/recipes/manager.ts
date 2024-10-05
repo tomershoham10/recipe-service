@@ -21,6 +21,18 @@ export class RecipeManager {
     }
   }
 
+  static async getPaginatedRecipes(page: number, limit: number): Promise<{ recipes: RecipeType[], hasMore: boolean, totalRecipes: number }> {
+    try {
+      const { recipes, totalRecipes } = await RecipeRepository.getPaginatedRecipes(page, limit);
+
+      const hasMore = page * limit < totalRecipes;
+      return { recipes, hasMore, totalRecipes };
+    } catch (error: any) {
+      console.error('Manager Error [getPaginatedRecipes]:', error.message);
+      throw new Error('Error in getMany');
+    }
+  }
+
   static async getRecipeById(id: string): Promise<RecipeType | null> {
     try {
       const recipe = await RecipeRepository.getRecipeById(id);

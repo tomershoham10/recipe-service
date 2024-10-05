@@ -3,9 +3,10 @@ import { RecipeController } from "./controller.js";
 
 const recipeRouter = express.Router();
 
-recipeRouter.get("/", RecipeController.getMany);
-
-recipeRouter.get("/:id", RecipeController.getById);
+recipeRouter
+    .get("/infinite-scroll", RecipeController.getPaginatedRecipes)
+    .get("/:id", RecipeController.getById)
+    .get("/", RecipeController.getMany);
 
 recipeRouter.post("/", RecipeController.create);
 
