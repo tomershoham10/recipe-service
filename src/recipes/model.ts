@@ -41,6 +41,8 @@ const recipesSchema: Schema = new Schema<RecipeType>(
       required: true,
     },
 
+    source: { type: String, required: false },
+
     ingredientsSections: [
       {
         header: { type: String, required: true },
@@ -52,6 +54,7 @@ const recipesSchema: Schema = new Schema<RecipeType>(
               required: true,
             },
             quantity: { type: Number, required: true },
+            comment: { type: String, required: false },
             unit: { type: String, required: true },
             index: { type: Number, required: true }
           },
@@ -63,9 +66,9 @@ const recipesSchema: Schema = new Schema<RecipeType>(
     stepsSections: [
       {
         header: { type: String, required: true },
-        quantifiedIngredients: [
+        steps: [
           {
-            quantity: { type: String, required: true },
+            info: { type: String, required: true },
             index: { type: Number, required: true }
           },
         ],
