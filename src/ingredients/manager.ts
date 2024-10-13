@@ -2,8 +2,8 @@ import { IngredientRepository } from "./repository.js";
 
 export class IngredientManager {
   static async createIngredient(
-    body: IngredientType
-  ): Promise<IngredientType> {
+    body: Partial<IngredientType>
+  ): Promise<IngredientType | null> {
     const newIngredient = await IngredientRepository.createIngredient(body);
     return newIngredient;
   }

@@ -6,8 +6,12 @@ export class IngredientController {
     try {
       const body = req.body;
       const newIngredient = await IngredientManager.createIngredient(body);
-      if (newIngredient) {
-        return res.status(201).json({ message: "Ingredient created successfully", newIngredient });
+      if (newIngredient === null) {
+        return res.status(200).json({ message: "Ingredient alraedy existed", exists: true });
+
+      }
+      else if (newIngredient) {
+        return res.status(201).json({ message: "Ingredient created successfully", exists: false, newIngredient });
       } else {
         throw new Error('Ingredient controller create Ingredient error.');
       }

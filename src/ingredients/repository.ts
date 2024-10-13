@@ -4,9 +4,11 @@ import IngredientModel from "./model.js";
 export class IngredientRepository {
 
   static async createIngredient(
-    ingredient: IngredientType
-  ): Promise<IngredientType> {
+    ingredient: Partial<IngredientType>
+  ): Promise<IngredientType | null> {
     console.log(ingredient);
+    const isExisted = await IngredientModel.find({ name: ingredient.name })
+    if (isExisted && isExisted.length > 0) return null;
     const newIngredient = await IngredientModel.create(ingredient);
     return newIngredient;
   }
