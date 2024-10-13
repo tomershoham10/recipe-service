@@ -32,6 +32,12 @@ export class RecipeController {
     }
   }
 
+  /**
+   * Retrieves a paginated list of recipes based on the request parameters.
+   * @param {Express.Request} req - The request object containing query parameters for pagination.
+   * @param {Express.Response} res - The response object to send the paginated recipes.
+   * @returns None
+   */
   static async getPaginatedRecipes(req: Express.Request, res: Express.Response) {
     try {
       const { page = 1, limit = 10 } = req.query;

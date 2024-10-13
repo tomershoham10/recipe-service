@@ -23,6 +23,13 @@ export default class RecipeRepository {
     }
   }
 
+  /**
+   * Retrieves a paginated list of recipes from the database.
+   * @param {number} page - The page number of the paginated results.
+   * @param {number} limit - The maximum number of recipes to return per page.
+   * @returns {Promise<{ recipes: RecipeType[], totalRecipes: number }>} A promise that resolves to an object containing the paginated recipes and the total number of recipes.
+   * @throws {Error} If there is an error while fetching the paginated recipes.
+   */
   static async getPaginatedRecipes(page: number, limit: number): Promise<{ recipes: RecipeType[], totalRecipes: number }> {
     try {
       const recipes = await RecipeModel.find()

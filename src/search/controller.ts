@@ -3,6 +3,12 @@ import RecipeModel from "../recipes/model.js";
 import IngredientModel from "../ingredients/model.js";
 
 export class SearchController {
+    /**
+     * Search for recipes and ingredients based on the query parameter 'q'.
+     * @param {Express.Request} req - The request object.
+     * @param {Express.Response} res - The response object.
+     * @returns {Promise<void>} A promise that resolves with the search results or an error response.
+     */
     static async search(req: Express.Request, res: Express.Response) {
         try {
             const { q } = req.query;
