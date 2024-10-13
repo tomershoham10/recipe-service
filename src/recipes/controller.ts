@@ -5,6 +5,7 @@ export class RecipeController {
   static async create(req: Express.Request, res: Express.Response) {
     try {
       const body = req.body;
+      console.log('RecipeController create - body', body)
       const recipe = await RecipeManager.createRecipe(body);
       if (recipe) {
         return res.status(201).json({ message: "Recipe created successfully", recipe });

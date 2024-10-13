@@ -5,6 +5,7 @@ export default class RecipeRepository {
   static async createRecipe(recipe: RecipeType): Promise<RecipeType> {
     try {
       const newRecipe = await RecipeModel.create(recipe);
+      console.log('RecipeRepository - createRecipe', newRecipe)
       return newRecipe;
     } catch (error: any) {
       console.error('Repository Error:', error.message);
