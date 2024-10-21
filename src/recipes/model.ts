@@ -13,6 +13,7 @@ enum RecipeCategories {
   COCKTAIL = "קוקטייל",
   SOUP = "מרק",
   BAKING = "אפייה",
+  MEAT = 'בשרי',
 }
 
 enum DifficultyLevels {
@@ -21,11 +22,31 @@ enum DifficultyLevels {
   ADVANCED = "למתקדמים",
 }
 
+enum Units {
+  UNITS = "יח'",
+  GRAMS = "גרם",
+  KGS = "ק\"ג",
+  ML = "מ\"ל",
+  LITERS = "ליטר",
+  TBLS = "כפות",
+  SPOONS = "כפיות",
+  CUPS = "כוסות",
+  PINCH = "קמצוץ",
+  BUNCH = "צרור",
+  HANDFUL = 'חופן',
+  SLICES = 'פרוסות',
+  PACKS = 'חבילות',
+  CONE = 'גביע',
+  FEW = 'מעט',
+  SCRAPING = 'גרידה'
+}
+
+
 const recipesSchema: Schema = new Schema<RecipeType>(
   {
     name: { type: String, required: true, unique: true, minlength: 3 },
 
-    description: { type: String, required: true, minlength: 5 },
+    description: { type: String, required: false },
 
     picture: { type: String, required: true, minlength: 5 },
 
@@ -53,13 +74,16 @@ const recipesSchema: Schema = new Schema<RecipeType>(
               ref: "Ingredient",
               required: true,
             },
-            quantity: { type: Number, required: true },
+            quantity: { type: Number, required: false },
             comment: { type: String, required: false },
-            unit: { type: String, required: true },
-            index: { type: Number, required: true }
+            unit: { type: String, enum: Object.values(Units), required: false },
+            index: { type: Number, required: true },
+            _id: false
           },
+
         ],
-        index: { type: Number, required: true }
+        index: { type: Number, required: true },
+        _id: false
       },
     ],
 
@@ -69,10 +93,13 @@ const recipesSchema: Schema = new Schema<RecipeType>(
         steps: [
           {
             info: { type: String, required: true },
-            index: { type: Number, required: true }
+            index: { type: Number, required: true },
+            _id: false
           },
         ],
-        index: { type: Number, required: true }
+        index: { type: Number, required: true },
+        _id: false
+
       },
     ],
   },

@@ -13,6 +13,7 @@ enum RecipeCategories {
     COCKTAIL = "קוקטייל",
     SOUP = "מרק",
     BAKING = "אפייה",
+    MEAT = 'בשרי'
 }
 
 enum DifficultyLevels {
@@ -31,12 +32,19 @@ enum Units {
     SPOONS = "כפיות",
     CUPS = "כוסות",
     PINCH = "קמצוץ",
+    BUNCH = "צרור",
+    HANDFUL = 'חופן',
+    SLICES = 'פרוסות',
+    PACKS = 'חבילות',
+    CONE = 'גביע',
+    FEW = 'מעט',
+    SCRAPING = 'גרידה'
 }
 
 interface QuantifiedIngredient {
     ingredientId: string;
-    quantity: number;
-    unit: Units;
+    quantity?: number;
+    unit?: Units;
     index: number;
     comment?: string;
 }
@@ -81,12 +89,19 @@ enum IngredientCategories {
     VEGETABLES = 'ירקות',
     FRUITS = 'פירות',
     DAIRY = 'חלבי',
+    CHEESE = 'גבינה',
     SEAFOOD = 'מאכלי ים',
     GRAINS = 'דגנים',
     SPICES = 'תבלינים',
-    SAUCES = 'ממרחים',
+    SAUCES = 'רטבים',
     HERBS = 'עשבי תיבול',
     ALCOHOL = 'אלכוהול',
+    TOOLS = 'כלי עזר',
+    SPREADS = 'ממרחים',
+    SOFT_DRINKS = 'משקאות קלים',
+    ASAIAN = 'אסייתי',
+    NUTS = 'אגוזים',
+    BAKING = 'אפייה'
 }
 
 interface IngredientType {

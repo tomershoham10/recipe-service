@@ -8,13 +8,21 @@ enum IngredientCategories {
   VEGETABLES = 'ירקות',
   FRUITS = 'פירות',
   DAIRY = 'חלבי',
+  CHEESE = 'גבינה',
   SEAFOOD = 'מאכלי ים',
   GRAINS = 'דגנים',
   SPICES = 'תבלינים',
-  SAUCES = 'ממרחים',
+  SAUCES = 'רטבים',
   HERBS = 'עשבי תיבול',
   ALCOHOL = 'אלכוהול',
+  TOOLS = 'כלי עזר',
+  SPREADS = 'ממרחים',
+  SOFT_DRINKS = 'משקאות קלים',
+  ASAIAN = 'אסייתי',
+  NUTS = 'אגוזים',
+  BAKING = 'אפייה'
 }
+
 
 const ingredientSchema: Schema = new Schema<IngredientType>(
   {
