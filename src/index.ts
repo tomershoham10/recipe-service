@@ -5,6 +5,7 @@ import startServer from "./server.js";
   try {
     await mongoose.connect("mongodb://mongo:27017/Cookbook?directConnection=true");
     console.log("connected");
+    // await startServer();
     startServer();
   } catch (e) {
     console.log(e);
